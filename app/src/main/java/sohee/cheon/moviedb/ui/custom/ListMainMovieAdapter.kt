@@ -1,20 +1,17 @@
 package sohee.cheon.moviedb.ui.custom
 
-import android.content.ClipData.Item
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import sohee.cheon.moviedb.data.response.MovieInfo
 import sohee.cheon.moviedb.databinding.ItemMainMovieBinding
 
 class ListMainMovieAdapter(
-    private val clickListener: OnItemClickListener,
+    private val clickListener: OnItemClickListener?,
     private val context: Context
 ) : ListAdapter<MovieInfo, ListMainMovieAdapter.MovieViewHolder>(MovieDiffUtil) {
     interface OnItemClickListener {
@@ -36,7 +33,7 @@ class ListMainMovieAdapter(
         val item = getItem(position)
 
         holder.movieLayout.setOnClickListener {
-            clickListener.onItemClick(position)
+            clickListener?.onItemClick(position)
         }
 
         holder.apply {
