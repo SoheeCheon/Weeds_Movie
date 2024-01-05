@@ -25,6 +25,7 @@ class MainMovieList @JvmOverloads constructor(
             0, 0
         ).apply {
             binding.movieTitle.text = getString(R.styleable.MainMovieList_MovieListTitle)
+            binding.movieTitle.textSize = getString(R.styleable.MainMovieList_TextSize)?.toFloat() ?: 20.0f
             recycle()
             addView(binding.root)
         }

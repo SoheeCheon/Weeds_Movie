@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="white_90">#D8D8D8</color>
+    <color name="white_30">#535353</color>
+
+    <color name="trailer_red">#A30F0F</color>
+
+    <color name="vote_green">#21d07a</color>
+    <color name="vote_yellow">#d2d531</color>
+    <color name="vote_red">#db2360</color>
 </resources>

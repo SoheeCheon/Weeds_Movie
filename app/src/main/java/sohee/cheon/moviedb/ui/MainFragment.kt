@@ -7,11 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import sohee.cheon.moviedb.databinding.FragmentMainBinding
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -24,7 +21,7 @@ class MainFragment : Fragment() {
     ): View {
         viewModel.startApp()
 
-        viewModel.popularMovieResponse.observe(viewLifecycleOwner) {
+        viewModel.movieListResponse.observe(viewLifecycleOwner) {
             it?.let {
                 Log.d("popular", "${it.results[0].id}")
                 binding.popularMovieList.setData(it.results)

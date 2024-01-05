@@ -2,7 +2,7 @@ package sohee.cheon.moviedb.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class PopularMovieResponse(
+data class MovieListResponse(
     @SerializedName("page")
     val page: Int,
     @SerializedName("results")

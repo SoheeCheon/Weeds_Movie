@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="MainMovieList">
         <attr name="MovieListTitle" format="reference|string"/>
+        <attr name="TextSize" format="reference|integer"/>
     </declare-styleable>
 </resources>
