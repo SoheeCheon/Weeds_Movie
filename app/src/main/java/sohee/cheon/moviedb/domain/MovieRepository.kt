@@ -5,5 +5,7 @@ import sohee.cheon.moviedb.data.response.PopularMovieResponse
 
 
 interface MovieRepository {
-    fun getPopularMovie(): Flow<Result<PopularMovieResponse>>
+    fun getPopularMovie(token: String): Flow<Result<PopularMovieResponse>>
+    fun getTopRated(token: String): Flow<Result<PopularMovieResponse>>
+    fun getUpcoming(token: String): Flow<Result<PopularMovieResponse>>
 }

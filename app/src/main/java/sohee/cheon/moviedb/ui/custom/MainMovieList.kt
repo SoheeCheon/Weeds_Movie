@@ -3,6 +3,7 @@ package sohee.cheon.moviedb.ui.custom
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import sohee.cheon.moviedb.R
@@ -15,9 +16,7 @@ class MainMovieList @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr), ListMainMovieAdapter.OnItemClickListener {
     private val binding by lazy { ListMainMovieBinding.inflate(LayoutInflater.from(context), this, false) }
-    private val adapter by lazy {
-        ListMainMovieAdapter(this, context)
-    }
+    private val adapter by lazy { ListMainMovieAdapter(this, context) }
 
     init {
         context.theme.obtainStyledAttributes(

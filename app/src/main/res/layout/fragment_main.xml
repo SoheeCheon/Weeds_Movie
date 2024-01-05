@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:background="@color/black"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,9 +40,9 @@
         android:id="@+id/popular_movie_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/top_menubar"
         app:MovieListTitle="Popular"
-        />
+        app:layout_constraintTop_toBottomOf="@id/top_menubar"
+        tools:layout_editor_absoluteX="0dp" />
 
     <sohee.cheon.moviedb.ui.custom.MainMovieList
         android:id="@+id/top_rated_movie_list"
@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/popular_movie_list"
         app:MovieListTitle="Top rated"
+        android:layout_marginTop="30dp"
         />
 
     <sohee.cheon.moviedb.ui.custom.MainMovieList
@@ -58,6 +59,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/top_rated_movie_list"
         app:MovieListTitle="Upcoming"
+        android:layout_marginTop="30dp"
         />
 
     <sohee.cheon.moviedb.ui.custom.MainMovieList
@@ -66,6 +68,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/upcoming_movie_list"
         app:MovieListTitle="Like"
+        android:layout_marginTop="30dp"
         />
 
 

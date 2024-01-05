@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import sohee.cheon.moviedb.R
 import sohee.cheon.moviedb.data.response.MovieInfo
 import sohee.cheon.moviedb.databinding.ItemMainMovieBinding
 
@@ -14,6 +15,8 @@ class ListMainMovieAdapter(
     private val clickListener: OnItemClickListener?,
     private val context: Context
 ) : ListAdapter<MovieInfo, ListMainMovieAdapter.MovieViewHolder>(MovieDiffUtil) {
+    private val moviePosterBasePath = "https://www.themoviedb.org/t/p/w300_and_h450_bestv2"
+
     interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
@@ -38,7 +41,7 @@ class ListMainMovieAdapter(
 
         holder.apply {
             Glide.with(context)
-                .load(item.posterPath)
+                .load(moviePosterBasePath + item.posterPath)
                 .into(holder.moviePoster)
             holder.movieTitle.text = item.title
         }

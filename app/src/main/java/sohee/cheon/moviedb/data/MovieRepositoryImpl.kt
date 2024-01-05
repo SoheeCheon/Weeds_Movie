@@ -11,16 +11,53 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val service: MovieService
 ): MovieRepository {
-    override fun getPopularMovie(): Flow<Result<PopularMovieResponse>> = flow {
-        val call = service.getPopularMovie()
+    override fun getPopularMovie(token: String): Flow<Result<PopularMovieResponse>> = flow {
+        val call = service.getPopularMovie(token)
         try {
             val result : Response<PopularMovieResponse> = call.execute()
             val responseBody = result.body()
             if (result.code() != 200 || responseBody == null) {
                 val error = Exception("${result.code()} : ${result.message()}")
-                Log.e("getPopularMovie", "$error")
+                Log.e("getPopularMovie", "${result}")
                 emit(Result.failure(error))
             } else {
+                Log.d("getPopularMovie", "$responseBody")
+                emit(Result.success(responseBody))
+            }
+        } catch (e : Exception) {
+            emit(Result.failure(e))
+        }
+    }
+
+    override fun getTopRated(token: String): Flow<Result<PopularMovieResponse>> = flow {
+        val call = service.getTopRated(token)
+        try {
+            val result : Response<PopularMovieResponse> = call.execute()
+            val responseBody = result.body()
+            if (result.code() != 200 || responseBody == null) {
+                val error = Exception("${result.code()} : ${result.message()}")
+                Log.e("getPopularMovie", "${result}")
+                emit(Result.failure(error))
+            } else {
+                Log.d("getPopularMovie", "$responseBody")
+                emit(Result.success(responseBody))
+            }
+        } catch (e : Exception) {
+            emit(Result.failure(e))
+        }
+    }
+
+    override fun getUpcoming(token: String): Flow<Result<PopularMovieResponse>> = flow {
+        val call = service.getUpComing(token)
+        try {
+            val result : Response<PopularMovieResponse> = call.execute()
+            val responseBody = result.body()
+            if (result.code() != 200 || responseBody == null) {
+                val error = Exception("${result.code()} : ${result.message()}")
+                Log.e("getPopularMovie", "${result}")
+                emit(Result.failure(error))
+            } else {
+                Log.d("getPopularMovie", "$responseBody")
                 emit(Result.success(responseBody))
             }
         } catch (e : Exception) {
