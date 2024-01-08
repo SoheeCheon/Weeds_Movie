@@ -18,9 +18,9 @@ abstract class BaseFragment<Binding: ViewBinding>(
         super.onCreate(savedInstanceState)
     }
 
-    fun moveDetail() {
-        val transaction = requireActivity().supportFragmentManager.beginTransaction().add(R.id.fragment_container, DetailFragment())
-        transaction.replace(R.id.fragment_container, DetailFragment())
+    fun move(fragment: Fragment) {
+        val transaction = requireActivity().supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment)
+        transaction.replace(R.id.fragment_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }

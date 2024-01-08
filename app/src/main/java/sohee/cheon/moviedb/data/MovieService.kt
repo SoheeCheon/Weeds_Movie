@@ -10,6 +10,7 @@ import sohee.cheon.moviedb.data.response.DetailMovieInfo
 import sohee.cheon.moviedb.data.response.DetailMovieTrailer
 import sohee.cheon.moviedb.data.response.MovieCreditInfo
 import sohee.cheon.moviedb.data.response.MovieListResponse
+import sohee.cheon.moviedb.data.response.SearchMovieResponse
 import sohee.cheon.moviedb.data.response.SimilarMovieInfo
 
 interface MovieService {
@@ -71,4 +72,12 @@ interface MovieService {
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = "kr-KR",
     ) : Call<MovieCreditInfo>
+
+    @GET("search/movie")
+    fun searchMovie(
+        @Header("Authorization") token: String,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("language") language: String = "kr-KR",
+        @Query("query") word: String
+    ) : Call<SearchMovieResponse>
 }

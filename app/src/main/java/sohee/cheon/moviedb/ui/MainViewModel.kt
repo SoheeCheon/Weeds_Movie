@@ -8,12 +8,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import sohee.cheon.moviedb.data.DetailMovie
-import sohee.cheon.moviedb.data.response.DetailMovieInfo
 import sohee.cheon.moviedb.data.response.MovieListResponse
+import sohee.cheon.moviedb.data.response.SearchMovieResponse
 import sohee.cheon.moviedb.domain.GetDetailMovieUseCase
 import sohee.cheon.moviedb.domain.GetMovieUseCase
 import sohee.cheon.moviedb.domain.GetTopRatedUseCase
 import sohee.cheon.moviedb.domain.GetUpcomingUseCase
+import sohee.cheon.moviedb.domain.SearchMovieUseCase
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +23,7 @@ class MainViewModel @Inject constructor(
     private val getTopRatedUseCase: GetTopRatedUseCase,
     private val getUpcomingUseCase: GetUpcomingUseCase,
     private val getDetailMovieUseCase: GetDetailMovieUseCase,
+    private val searchMovieUseCase: SearchMovieUseCase,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _popularMovies = MutableLiveData<MovieListResponse>()
@@ -38,6 +40,9 @@ class MainViewModel @Inject constructor(
 
     private val _token = MutableLiveData<String>()
     val token : LiveData<String> = _token
+
+    private val _searchMovies = MutableLiveData<SearchMovieResponse>()
+    val searchMovies : LiveData<SearchMovieResponse> = _searchMovies
 
     fun setToken(token: String) {
         _token.value = token
@@ -75,5 +80,16 @@ class MainViewModel @Inject constructor(
             val result = getDetailMovieUseCase(_token.value ?: "", id)
             _movieDetail.postValue(result)
         }
+    }
+
+    fun getSearch(word: String) {
+        CoroutineScope(ioDispatcher).launch {
+            val result = searchMovieUseCase(_token.value ?: "", word)
+            _searchMovies.postValue(result)
+        }
+    }
+
+    fun clearSearch() {
+        _searchMovies.value = null
     }
 }

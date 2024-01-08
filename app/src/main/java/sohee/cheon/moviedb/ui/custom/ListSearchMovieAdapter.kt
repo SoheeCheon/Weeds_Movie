@@ -1,6 +1,7 @@
 package sohee.cheon.moviedb.ui.custom
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,32 +9,31 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import sohee.cheon.moviedb.BuildConfig
-import sohee.cheon.moviedb.R
 import sohee.cheon.moviedb.data.response.MovieInfo
-import sohee.cheon.moviedb.databinding.ItemMainMovieBinding
+import sohee.cheon.moviedb.databinding.ItemSearchMovieBinding
 
-class ListMainMovieAdapter(
+class ListSearchMovieAdapter (
     private val clickListener: OnItemClickListener?,
     private val context: Context,
-) : ListAdapter<MovieInfo, ListMainMovieAdapter.MovieViewHolder>(MovieDiffUtil) {
+) : ListAdapter<MovieInfo, ListSearchMovieAdapter.SearchMovieViewHolder>(SearchMovieDiffUtil) {
     private val moviePosterBasePath = BuildConfig.IMAGE_BASE_URL
 
     interface OnItemClickListener {
         fun onItemClick(id: Int)
     }
 
-    class MovieViewHolder(binding: ItemMainMovieBinding): RecyclerView.ViewHolder(binding.root) {
+    class SearchMovieViewHolder(binding: ItemSearchMovieBinding): RecyclerView.ViewHolder(binding.root) {
         val movieLayout = binding.root
         val moviePoster = binding.moviePoster
         val movieTitle = binding.movieTitle
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val view = ItemMainMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MovieViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchMovieViewHolder {
+        val view = ItemSearchMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return SearchMovieViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchMovieViewHolder, position: Int) {
         val item = getItem(position)
 
         holder.movieLayout.setOnClickListener {
@@ -50,7 +50,7 @@ class ListMainMovieAdapter(
 
 }
 
-object MovieDiffUtil : DiffUtil.ItemCallback<MovieInfo>() {
+object SearchMovieDiffUtil : DiffUtil.ItemCallback<MovieInfo>() {
     override fun areContentsTheSame(oldItem: MovieInfo, newItem: MovieInfo): Boolean {
         return oldItem.id == newItem.id
     }

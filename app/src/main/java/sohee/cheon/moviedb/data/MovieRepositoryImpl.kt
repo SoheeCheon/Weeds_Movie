@@ -8,6 +8,7 @@ import sohee.cheon.moviedb.data.response.DetailMovieInfo
 import sohee.cheon.moviedb.data.response.DetailMovieTrailer
 import sohee.cheon.moviedb.data.response.MovieCreditInfo
 import sohee.cheon.moviedb.data.response.MovieListResponse
+import sohee.cheon.moviedb.data.response.SearchMovieResponse
 import sohee.cheon.moviedb.data.response.SimilarMovieInfo
 import sohee.cheon.moviedb.domain.MovieRepository
 import javax.inject.Inject
@@ -134,6 +135,24 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Result.failure(error))
             } else {
                 Log.d("getSimilarMovie", "$responseBody")
+                emit(Result.success(responseBody))
+            }
+        } catch (e : Exception) {
+            emit(Result.failure(e))
+        }
+    }
+
+    override fun searchMovie(token: String, word: String): Flow<Result<SearchMovieResponse>> = flow {
+        val call = service.searchMovie(token, word = word)
+        try {
+            val result : Response<SearchMovieResponse> = call.execute()
+            val responseBody = result.body()
+            if (result.code() != 200 || responseBody == null) {
+                val error = Exception("${result.code()} : ${result.message()}")
+                Log.e("searchMovie", "${result}")
+                emit(Result.failure(error))
+            } else {
+                Log.d("searchMovie", "$responseBody")
                 emit(Result.success(responseBody))
             }
         } catch (e : Exception) {

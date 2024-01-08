@@ -61,7 +61,7 @@ class DetailFragment: BaseFragment<FragmentDetailBinding>(FragmentDetailBinding:
 
     override fun onItemClick(id: Int) {
         viewModel.getDetailMovie(id)
-        moveDetail()
+        move(DetailFragment())
     }
     override fun onVideoClick(id: String) {
         // youtube로 이동

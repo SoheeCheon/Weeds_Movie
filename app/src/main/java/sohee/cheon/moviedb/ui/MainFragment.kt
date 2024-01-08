@@ -1,13 +1,9 @@
 package sohee.cheon.moviedb.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
-import sohee.cheon.moviedb.R
 import sohee.cheon.moviedb.databinding.FragmentMainBinding
 import sohee.cheon.moviedb.ui.custom.ListMainMovieAdapter
 
@@ -20,6 +16,10 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.startApp()
+
+        binding.search.setOnClickListener {
+            move(SearchFragment())
+        }
 
         viewModel.movieListResponse.observe(viewLifecycleOwner) {
             it?.let {
@@ -45,6 +45,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
     override fun onItemClick(id: Int) {
         viewModel.getDetailMovie(id)
-        moveDetail()
+        move(DetailFragment())
     }
 }
