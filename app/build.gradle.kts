@@ -21,6 +21,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "API_KEY", getApiKey("API_KEY"))
+        buildConfigField("String", "IMAGE_BASE_URL", getApiKey("IMAGE_BASE_URL"))
     }
 
     buildTypes {

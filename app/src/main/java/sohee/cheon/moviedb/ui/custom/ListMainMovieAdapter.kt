@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import sohee.cheon.moviedb.BuildConfig
 import sohee.cheon.moviedb.R
 import sohee.cheon.moviedb.data.response.MovieInfo
 import sohee.cheon.moviedb.databinding.ItemMainMovieBinding
@@ -15,10 +16,10 @@ class ListMainMovieAdapter(
     private val clickListener: OnItemClickListener?,
     private val context: Context
 ) : ListAdapter<MovieInfo, ListMainMovieAdapter.MovieViewHolder>(MovieDiffUtil) {
-    private val moviePosterBasePath = "https://www.themoviedb.org/t/p/w300_and_h450_bestv2"
+    private val moviePosterBasePath = BuildConfig.IMAGE_BASE_URL
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(id: Int)
     }
 
     class MovieViewHolder(binding: ItemMainMovieBinding): RecyclerView.ViewHolder(binding.root) {
@@ -36,7 +37,7 @@ class ListMainMovieAdapter(
         val item = getItem(position)
 
         holder.movieLayout.setOnClickListener {
-            clickListener?.onItemClick(position)
+            clickListener?.onItemClick(item.id)
         }
 
         holder.apply {

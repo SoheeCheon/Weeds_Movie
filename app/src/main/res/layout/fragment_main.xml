@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:background="@color/black"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:background="@color/black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_menubar"
@@ -30,46 +34,75 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/search"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:src="@drawable/search"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <sohee.cheon.moviedb.ui.custom.MainMovieList
-        android:id="@+id/popular_movie_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:MovieListTitle="Popular"
-        app:layout_constraintTop_toBottomOf="@id/top_menubar"
-        tools:layout_editor_absoluteX="0dp" />
+        <TextView
+            android:layout_marginTop="4dp"
+            android:id="@+id/popular_movie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/top_menubar"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:text="Popular"/>
 
-    <sohee.cheon.moviedb.ui.custom.MainMovieList
-        android:id="@+id/top_rated_movie_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/popular_movie_list"
-        app:MovieListTitle="Top rated"
-        android:layout_marginTop="30dp"
-        />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/popular_movie_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/popular_movie"
+            tools:listitem="@layout/item_main_movie" />
 
-    <sohee.cheon.moviedb.ui.custom.MainMovieList
-        android:id="@+id/upcoming_movie_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/top_rated_movie_list"
-        app:MovieListTitle="Upcoming"
-        android:layout_marginTop="30dp"
-        />
+        <TextView
+            android:id="@+id/top_rated_movie"
 
-    <sohee.cheon.moviedb.ui.custom.MainMovieList
-        android:id="@+id/like_movie_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/upcoming_movie_list"
-        app:MovieListTitle="Like"
-        android:layout_marginTop="30dp"
-        />
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/popular_movie_list"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Top rated"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/top_rated_movie_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_rated_movie"
+            tools:listitem="@layout/item_main_movie" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/upcoming_movie"
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/top_rated_movie_list"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Upcoming"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/upcoming_movie_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/upcoming_movie"
+            tools:listitem="@layout/item_main_movie" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

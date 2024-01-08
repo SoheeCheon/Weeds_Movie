@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import sohee.cheon.moviedb.data.DetailMovie
 import sohee.cheon.moviedb.data.response.DetailMovieInfo
 import sohee.cheon.moviedb.data.response.MovieListResponse
 import sohee.cheon.moviedb.domain.GetDetailMovieUseCase
@@ -32,8 +33,8 @@ class MainViewModel @Inject constructor(
     private val _upcomingMovies = MutableLiveData<MovieListResponse>()
     val upcomingMovies : LiveData<MovieListResponse> = _upcomingMovies
 
-    private val _movieDetail = MutableLiveData<DetailMovieInfo>()
-    val movieDetail : LiveData<DetailMovieInfo> = _movieDetail
+    private val _movieDetail = MutableLiveData<DetailMovie>()
+    val movieDetail : LiveData<DetailMovie> = _movieDetail
 
     private val _token = MutableLiveData<String>()
     val token : LiveData<String> = _token

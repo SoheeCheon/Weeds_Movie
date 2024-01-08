@@ -7,7 +7,10 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import sohee.cheon.moviedb.BuildConfig
 import sohee.cheon.moviedb.data.response.DetailMovieInfo
+import sohee.cheon.moviedb.data.response.DetailMovieTrailer
+import sohee.cheon.moviedb.data.response.MovieCreditInfo
 import sohee.cheon.moviedb.data.response.MovieListResponse
+import sohee.cheon.moviedb.data.response.SimilarMovieInfo
 
 interface MovieService {
     @GET("authentication")
@@ -40,8 +43,32 @@ interface MovieService {
     @GET("movie/{movie_id}")
     fun getDetailMovie(
         @Header("Authorization") token: String,
+        @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = "kr-KR",
-        @Path("movie_id")movieId: Int
     ) : Call<DetailMovieInfo>
+
+    @GET("movie/{movie_id}/videos")
+    fun getMovieTrailer(
+        @Header("Authorization") token: String,
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("language") language: String = "kr-KR"
+    ) : Call<DetailMovieTrailer>
+
+    @GET("movie/{movie_id}/similar")
+    fun getSimilarMovie(
+        @Header("Authorization") token: String,
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("language") language: String = "kr-KR",
+    ) : Call<SimilarMovieInfo>
+
+    @GET("movie/{movie_id}/credits")
+    fun getCredit(
+        @Header("Authorization") token: String,
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("language") language: String = "kr-KR",
+    ) : Call<MovieCreditInfo>
 }

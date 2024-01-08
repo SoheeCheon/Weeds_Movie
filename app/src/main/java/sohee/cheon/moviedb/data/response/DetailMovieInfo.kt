@@ -12,7 +12,7 @@ data class DetailMovieInfo(
     @SerializedName("budget")
     val budget: Int,
     @SerializedName("genre_ids")
-    val genreIds : List<Genre>,
+    val genreIds : List<Genre>?,
     @SerializedName("id")
     val id : Int,
     @SerializedName("imdb_id")
@@ -50,7 +50,7 @@ data class DetailMovieInfo(
     @SerializedName("vote_average")
     val voteAverage : Float,
     @SerializedName("vote_count")
-    val voteCount : Int
+    val voteCount : Int,
 )
 
 data class BelongToCollection(
