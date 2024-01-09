@@ -10,5 +10,6 @@ data class DetailMovie(
     val movieHeader: String,
     val movieTrailer: DetailMovieTrailer?,
     val credit: MovieCreditInfo?,
-    val similarMovie: SimilarMovieInfo?
+    val similarMovie: SimilarMovieInfo?,
+    var bookmark: Boolean
 )

@@ -1,4 +1,4 @@
-package sohee.cheon.moviedb.data
+package sohee.cheon.moviedb.data.service
 
 import retrofit2.Call
 import retrofit2.http.GET
@@ -21,7 +21,7 @@ interface MovieService {
     fun getPopularMovie(
         @Header("Authorization") token: String,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Query("language") language: String = "kr-KR",
+        @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
     ) : Call<MovieListResponse>
 
@@ -29,7 +29,7 @@ interface MovieService {
     fun getTopRated(
         @Header("Authorization") token: String,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Query("language") language: String = "kr-KR",
+        @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
     ) : Call<MovieListResponse>
 
@@ -37,7 +37,7 @@ interface MovieService {
     fun getUpComing(
         @Header("Authorization") token: String,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Query("language") language: String = "kr-KR",
+        @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
     ) : Call<MovieListResponse>
 
@@ -46,7 +46,7 @@ interface MovieService {
         @Header("Authorization") token: String,
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Query("language") language: String = "kr-KR",
+        @Query("language") language: String = "en-US",
     ) : Call<DetailMovieInfo>
 
     @GET("movie/{movie_id}/videos")
@@ -54,7 +54,7 @@ interface MovieService {
         @Header("Authorization") token: String,
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Query("language") language: String = "kr-KR"
+        @Query("language") language: String = "en-US"
     ) : Call<DetailMovieTrailer>
 
     @GET("movie/{movie_id}/similar")
@@ -62,7 +62,7 @@ interface MovieService {
         @Header("Authorization") token: String,
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Query("language") language: String = "kr-KR",
+        @Query("language") language: String = "en-US",
     ) : Call<SimilarMovieInfo>
 
     @GET("movie/{movie_id}/credits")
@@ -70,14 +70,14 @@ interface MovieService {
         @Header("Authorization") token: String,
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Query("language") language: String = "kr-KR",
+        @Query("language") language: String = "en-US",
     ) : Call<MovieCreditInfo>
 
     @GET("search/movie")
     fun searchMovie(
         @Header("Authorization") token: String,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Query("language") language: String = "kr-KR",
+        @Query("language") language: String = "en-US",
         @Query("query") word: String
     ) : Call<SearchMovieResponse>
 }

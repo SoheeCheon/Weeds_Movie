@@ -29,5 +29,5 @@ data class TrailerInfo(
     @SerializedName("published_at")
     val publishAt: String,
     @SerializedName("id")
-    val id: String
+    val id: String,
 )

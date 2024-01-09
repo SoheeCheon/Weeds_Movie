@@ -6,15 +6,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import sohee.cheon.moviedb.BuildConfig
+import sohee.cheon.moviedb.R
 import sohee.cheon.moviedb.databinding.FragmentDetailBinding
 import sohee.cheon.moviedb.ui.custom.ListCreditAdapter
 import sohee.cheon.moviedb.ui.custom.ListMainMovieAdapter
 import sohee.cheon.moviedb.ui.custom.ListTrailerAdapter
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class DetailFragment: BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate), ListTrailerAdapter.OnItemClickListener, ListMainMovieAdapter.OnItemClickListener {
@@ -24,6 +27,7 @@ class DetailFragment: BaseFragment<FragmentDetailBinding>(FragmentDetailBinding:
     private val similarMovieAdapter by lazy { ListMainMovieAdapter(this, requireContext()) }
 
     private val imageBaseUrl = BuildConfig.IMAGE_BASE_URL
+    private val youtubeBaseUrl = BuildConfig.YOUTUBE_BASE_URL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.movieDetail.observe(viewLifecycleOwner) {
@@ -34,10 +38,10 @@ class DetailFragment: BaseFragment<FragmentDetailBinding>(FragmentDetailBinding:
                 .into(binding.moviePosterImage)
 
             binding.releaseDate.text = it.movieHeader
-            binding.vote.text = String.format("0.0f", it.movieInfo.voteAverage)
+            binding.vote.text = DecimalFormat("#.#").format(it.movieInfo.voteAverage)
             binding.language.text = it.movieInfo.originalLanguage.uppercase()
             binding.status.text = it.movieInfo.status
-            binding.revenue.text = "$${it.movieInfo.revenue}"
+            binding.revenue.text = DecimalFormat("#,###").format(it.movieInfo.revenue)
             binding.originalTitle.text = it.movieInfo.originalTitle
             binding.tagline.text = it.movieInfo.tagline
             binding.overview.text = it.movieInfo.overView
@@ -54,6 +58,18 @@ class DetailFragment: BaseFragment<FragmentDetailBinding>(FragmentDetailBinding:
 
             similarMovieAdapter.submitList(it.similarMovie?.results)
             binding.similarMovieList.adapter = similarMovieAdapter
+
+            if (it.bookmark) {
+                val src = ResourcesCompat.getDrawable(resources, R.drawable.bookmark, null)
+                binding.bookmark.setImageDrawable(src)
+            } else {
+                val src = ResourcesCompat.getDrawable(resources, R.drawable.non_bookmark, null)
+                binding.bookmark.setImageDrawable(src)
+            }
+        }
+
+        binding.bookmark.setOnClickListener {
+            viewModel.changeBookmark()
         }
 
         binding.backArrow.setOnClickListener {
@@ -65,9 +81,9 @@ class DetailFragment: BaseFragment<FragmentDetailBinding>(FragmentDetailBinding:
         viewModel.getDetailMovie(id)
         move(DetailFragment())
     }
-    override fun onVideoClick(id: String) {
+    override fun onVideoClick(key: String) {
         // youtube로 이동
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://youtube.com/watch?v=${id}"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeBaseUrl + key))
         requireContext().startActivity(intent)
     }
 }

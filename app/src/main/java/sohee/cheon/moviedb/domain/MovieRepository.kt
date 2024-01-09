@@ -18,4 +18,5 @@ interface MovieRepository {
     fun getSimilarMovie(token: String, movieId: Int): Flow<Result<SimilarMovieInfo>>
     fun getCredit(token: String, movieId: Int): Flow<Result<MovieCreditInfo>>
     fun searchMovie(token: String, word: String): Flow<Result<SearchMovieResponse>>
+
 }

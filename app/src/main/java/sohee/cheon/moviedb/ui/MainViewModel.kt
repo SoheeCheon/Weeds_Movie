@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import sohee.cheon.moviedb.data.DetailMovie
 import sohee.cheon.moviedb.data.response.MovieListResponse
 import sohee.cheon.moviedb.data.response.SearchMovieResponse
+import sohee.cheon.moviedb.domain.ChangeBookmarkUseCase
 import sohee.cheon.moviedb.domain.GetDetailMovieUseCase
 import sohee.cheon.moviedb.domain.GetMovieUseCase
 import sohee.cheon.moviedb.domain.GetTopRatedUseCase
@@ -24,6 +25,7 @@ class MainViewModel @Inject constructor(
     private val getUpcomingUseCase: GetUpcomingUseCase,
     private val getDetailMovieUseCase: GetDetailMovieUseCase,
     private val searchMovieUseCase: SearchMovieUseCase,
+    private val changeBookmarkUseCase: ChangeBookmarkUseCase,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _popularMovies = MutableLiveData<MovieListResponse>()
@@ -91,5 +93,25 @@ class MainViewModel @Inject constructor(
 
     fun clearSearch() {
         _searchMovies.value = null
+    }
+
+    fun changeBookmark() {
+        val movie = _movieDetail.value
+        movie?.let {
+            CoroutineScope(ioDispatcher).launch {
+                val result = changeBookmarkUseCase(movie.bookmark, movie.movieInfo.id)
+
+                _movieDetail.postValue(
+                    DetailMovie(
+                        movieHeader = movie.movieHeader,
+                        movieInfo = movie.movieInfo,
+                        movieTrailer = movie.movieTrailer,
+                        similarMovie = movie.similarMovie,
+                        credit = movie.credit,
+                        bookmark = result
+                    )
+                )
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 package sohee.cheon.moviedb.ui.custom
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -17,14 +18,14 @@ class ListTrailerAdapter(
     private val clickListener: OnItemClickListener?,
     private val context: Context
 ) : ListAdapter<TrailerInfo, ListTrailerAdapter.TrailerViewHolder>(TrailerDiffUtil) {
-    private val moviePosterBasePath = BuildConfig.IMAGE_BASE_URL
+    private val youtubeThumbnailBaseUrl = BuildConfig.YOUTUBE_THUMBNAIL_URL
 
     interface OnItemClickListener {
         fun onVideoClick(id: String)
     }
 
     class TrailerViewHolder(binding: ItemTrailerBinding): RecyclerView.ViewHolder(binding.root) {
-        val moviePoster = binding.trailerThumbnail
+        val youtube = binding.youtubeTrailer
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrailerViewHolder {
@@ -35,15 +36,13 @@ class ListTrailerAdapter(
     override fun onBindViewHolder(holder: TrailerViewHolder, position: Int) {
         val item = getItem(position)
 
-        holder.moviePoster.setOnClickListener {
+        holder.youtube.setOnClickListener {
             clickListener?.onVideoClick(item.key)
         }
 
-        holder.apply {
-            Glide.with(context)
-                .load(moviePosterBasePath + item.key)
-                .into(holder.moviePoster)
-        }
+        Glide.with(context)
+            .load(youtubeThumbnailBaseUrl + item.key + "/0.jpg")
+            .into(holder.youtube)
     }
 
 }

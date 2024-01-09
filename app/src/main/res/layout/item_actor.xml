@@ -10,7 +10,7 @@
         android:background="@drawable/actor_background"
         android:id="@+id/profile"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:src="@drawable/person"

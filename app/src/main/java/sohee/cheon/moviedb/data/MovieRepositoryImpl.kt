@@ -10,11 +10,12 @@ import sohee.cheon.moviedb.data.response.MovieCreditInfo
 import sohee.cheon.moviedb.data.response.MovieListResponse
 import sohee.cheon.moviedb.data.response.SearchMovieResponse
 import sohee.cheon.moviedb.data.response.SimilarMovieInfo
+import sohee.cheon.moviedb.data.service.MovieService
 import sohee.cheon.moviedb.domain.MovieRepository
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
-    private val service: MovieService
+    private val service: MovieService,
 ): MovieRepository {
     override fun getPopularMovie(token: String): Flow<Result<MovieListResponse>> = flow {
         val call = service.getPopularMovie(token)
