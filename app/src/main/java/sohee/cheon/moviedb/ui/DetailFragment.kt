@@ -1,5 +1,7 @@
 package sohee.cheon.moviedb.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +34,7 @@ class DetailFragment: BaseFragment<FragmentDetailBinding>(FragmentDetailBinding:
                 .into(binding.moviePosterImage)
 
             binding.releaseDate.text = it.movieHeader
-            binding.vote.text = it.movieInfo.voteAverage.toString()
+            binding.vote.text = String.format("0.0f", it.movieInfo.voteAverage)
             binding.language.text = it.movieInfo.originalLanguage.uppercase()
             binding.status.text = it.movieInfo.status
             binding.revenue.text = "$${it.movieInfo.revenue}"
@@ -65,5 +67,7 @@ class DetailFragment: BaseFragment<FragmentDetailBinding>(FragmentDetailBinding:
     }
     override fun onVideoClick(id: String) {
         // youtube로 이동
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://youtube.com/watch?v=${id}"))
+        requireContext().startActivity(intent)
     }
 }
