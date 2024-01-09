@@ -1,5 +1,6 @@
 package sohee.cheon.moviedb.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -87,7 +88,10 @@ class MainViewModel @Inject constructor(
     fun getSearch(word: String) {
         CoroutineScope(ioDispatcher).launch {
             val result = searchMovieUseCase(_token.value ?: "", word)
-            _searchMovies.postValue(result)
+
+            result?.let {
+                _searchMovies.postValue(result)
+            }
         }
     }
 

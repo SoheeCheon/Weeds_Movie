@@ -31,6 +31,7 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Result.success(responseBody))
             }
         } catch (e : Exception) {
+            Log.e("getPopularMovie", "${e}\n${call.request()}")
             emit(Result.failure(e))
         }
     }
@@ -49,6 +50,7 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Result.success(responseBody))
             }
         } catch (e : Exception) {
+            Log.e("getTopRated", "${e}\n${call.request()}")
             emit(Result.failure(e))
         }
     }
@@ -67,6 +69,7 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Result.success(responseBody))
             }
         } catch (e : Exception) {
+            Log.e("getUpcoming", "${e}\n${call.request()}")
             emit(Result.failure(e))
         }
     }
@@ -85,6 +88,7 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Result.success(responseBody))
             }
         } catch (e : Exception) {
+            Log.e("getDetailMovie", "${e}\n${call.request()}")
             emit(Result.failure(e))
         }
     }
@@ -103,6 +107,7 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Result.success(responseBody))
             }
         } catch (e : Exception) {
+            Log.e("getMovieTrailer", "${e}\n${call.request()}")
             emit(Result.failure(e))
         }
     }
@@ -121,6 +126,7 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Result.success(responseBody))
             }
         } catch (e : Exception) {
+            Log.e("getSimilarMovie", "${e}\n${call.request()}")
             emit(Result.failure(e))
         }
     }
@@ -132,13 +138,14 @@ class MovieRepositoryImpl @Inject constructor(
             val responseBody = result.body()
             if (result.code() != 200 || responseBody == null) {
                 val error = Exception("${result.code()} : ${result.message()}")
-                Log.e("getSimilarMovie", "${result}")
+                Log.e("getCredit", "${result}")
                 emit(Result.failure(error))
             } else {
-                Log.d("getSimilarMovie", "$responseBody")
+                Log.d("getCredit", "$responseBody")
                 emit(Result.success(responseBody))
             }
         } catch (e : Exception) {
+            Log.e("getCredit", "${e}\n${call.request()}")
             emit(Result.failure(e))
         }
     }
@@ -157,6 +164,7 @@ class MovieRepositoryImpl @Inject constructor(
                 emit(Result.success(responseBody))
             }
         } catch (e : Exception) {
+            Log.e("searchMovie", "${e}\n${call.request()}")
             emit(Result.failure(e))
         }
     }

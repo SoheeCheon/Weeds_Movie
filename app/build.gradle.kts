@@ -24,6 +24,7 @@ android {
         buildConfigField("String", "IMAGE_BASE_URL", getApiKey("IMAGE_BASE_URL"))
         buildConfigField("String", "YOUTUBE_BASE_URL", getApiKey("YOUTUBE_BASE_URL"))
         buildConfigField("String", "YOUTUBE_THUMBNAIL_URL", getApiKey("YOUTUBE_THUMBNAIL_URL"))
+        buildConfigField("String", "AUTHRIZATION", getApiKey("AUTHRIZATION"))
     }
 
     buildTypes {
