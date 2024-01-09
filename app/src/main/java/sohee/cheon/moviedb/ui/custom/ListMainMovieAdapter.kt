@@ -1,5 +1,6 @@
 package sohee.cheon.moviedb.ui.custom
 
+import android.app.ActionBar.LayoutParams
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -43,6 +44,7 @@ class ListMainMovieAdapter(
         holder.apply {
             Glide.with(context)
                 .load(moviePosterBasePath + item.posterPath)
+                .override(LayoutParams.WRAP_CONTENT)
                 .into(holder.moviePoster)
             holder.movieTitle.text = item.title
         }
