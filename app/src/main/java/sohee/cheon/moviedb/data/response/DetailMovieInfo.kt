@@ -11,7 +11,7 @@ data class DetailMovieInfo(
     val belongsToCollection : BelongToCollection,
     @SerializedName("budget")
     val budget: Int,
-    @SerializedName("genre_ids")
+    @SerializedName("genres")
     val genreIds : List<Genre>?,
     @SerializedName("id")
     val id : Int,

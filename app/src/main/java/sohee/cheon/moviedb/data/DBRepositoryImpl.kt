@@ -3,6 +3,7 @@ package sohee.cheon.moviedb.data
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.provider.BaseColumns
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import sohee.cheon.moviedb.data.db.Bookmark
@@ -32,7 +33,12 @@ class DBRepositoryImpl @Inject constructor(
             sortOrder
         )
 
-        emit(cursor.count == 1)
+        if (cursor.count == 0) {
+            emit(false)
+        } else {
+            cursor.moveToFirst()
+            emit(cursor.getInt(1) == movieId)
+        }
 
         db.close()
     }
@@ -43,7 +49,8 @@ class DBRepositoryImpl @Inject constructor(
         if (bookmark) {
             val selection = "${Bookmark.BookEntry.MOVIE_ID} LIKE ?"
             val selectionArgs = arrayOf("$movieId")
-            val deletedRows = db.delete(Bookmark.BookEntry.TABLE_NAME, selection, selectionArgs)
+            val newRowId = db.delete(Bookmark.BookEntry.TABLE_NAME, selection, selectionArgs)
+            Log.d("Delete", "$newRowId")
 
             emit(false)
         } else {
@@ -52,8 +59,41 @@ class DBRepositoryImpl @Inject constructor(
             }
 
             val newRowId = db?.insert(Bookmark.BookEntry.TABLE_NAME, null, value)
+            Log.d("Insert", "$newRowId")
+
 
             emit(true)
         }
+        db.close()
     }
+
+    override fun getBookmark(): Flow<Array<Int>> = flow {
+        var result = arrayOf<Int>()
+
+        val db = bookmarkDB.readableDatabase
+        val project = arrayOf(BaseColumns._ID, Bookmark.BookEntry.MOVIE_ID)
+
+        val cursor = db.query(
+            Bookmark.BookEntry.TABLE_NAME,
+            project,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+
+        cursor.moveToFirst()
+        result = result.plus(cursor.getInt(1))
+
+        for ( i in 2..cursor.count) {
+            cursor.moveToNext()
+            result = result.plus(cursor.getInt(1))
+        }
+
+        emit(result)
+
+        db.close()
+    }
+
 }

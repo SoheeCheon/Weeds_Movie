@@ -9,9 +9,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import sohee.cheon.moviedb.data.DetailMovie
+import sohee.cheon.moviedb.data.response.DetailMovieInfo
 import sohee.cheon.moviedb.data.response.MovieListResponse
 import sohee.cheon.moviedb.data.response.SearchMovieResponse
 import sohee.cheon.moviedb.domain.ChangeBookmarkUseCase
+import sohee.cheon.moviedb.domain.GetBookmarkMovieUseCase
 import sohee.cheon.moviedb.domain.GetDetailMovieUseCase
 import sohee.cheon.moviedb.domain.GetMovieUseCase
 import sohee.cheon.moviedb.domain.GetTopRatedUseCase
@@ -27,6 +29,7 @@ class MainViewModel @Inject constructor(
     private val getDetailMovieUseCase: GetDetailMovieUseCase,
     private val searchMovieUseCase: SearchMovieUseCase,
     private val changeBookmarkUseCase: ChangeBookmarkUseCase,
+    private val getBookmarkMovieUseCase: GetBookmarkMovieUseCase,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _popularMovies = MutableLiveData<MovieListResponse>()
@@ -37,6 +40,9 @@ class MainViewModel @Inject constructor(
 
     private val _upcomingMovies = MutableLiveData<MovieListResponse>()
     val upcomingMovies : LiveData<MovieListResponse> = _upcomingMovies
+
+    private val _bookmarkMovies = MutableLiveData<List<DetailMovieInfo>>()
+    val bookmarkMovies : LiveData<List<DetailMovieInfo>> = _bookmarkMovies
 
     private val _movieDetail = MutableLiveData<DetailMovie>()
     val movieDetail : LiveData<DetailMovie> = _movieDetail
@@ -55,6 +61,7 @@ class MainViewModel @Inject constructor(
         getMovie()
         getTopRateMovie()
         getUpcoming()
+        getBookmark()
     }
 
     private fun getMovie() {
@@ -75,6 +82,13 @@ class MainViewModel @Inject constructor(
         CoroutineScope(ioDispatcher).launch {
             val result = getUpcomingUseCase(_token.value ?: "")
             _upcomingMovies.postValue(result)
+        }
+    }
+
+    private fun getBookmark() {
+        CoroutineScope(ioDispatcher).launch {
+            val result = getBookmarkMovieUseCase(_token.value ?: "")
+            _bookmarkMovies.postValue(result)
         }
     }
 
@@ -104,6 +118,16 @@ class MainViewModel @Inject constructor(
         movie?.let {
             CoroutineScope(ioDispatcher).launch {
                 val result = changeBookmarkUseCase(movie.bookmark, movie.movieInfo.id)
+
+                val currentList = _bookmarkMovies.value ?: listOf()
+
+                if (result) {
+                    val updateList = currentList.plus(it.movieInfo)
+                    _bookmarkMovies.postValue(updateList)
+                } else {
+                    val updateList = currentList.plus(it.movieInfo)
+                    _bookmarkMovies.postValue(updateList)
+                }
 
                 _movieDetail.postValue(
                     DetailMovie(
