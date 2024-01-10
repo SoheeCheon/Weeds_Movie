@@ -47,8 +47,17 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
         viewModel.bookmarkMovies.observe(viewLifecycleOwner) {
             it?.let {
+                if (it.isEmpty()) {
+                    binding.bookmarkMovie.visibility = View.GONE
+                } else {
+                    binding.bookmarkMovie.visibility = View.VISIBLE
+                }
                 bookmarkAdapter.submitList(it)
                 binding.bookmarkMovieList.adapter = bookmarkAdapter
+            }
+
+            if (it == null) {
+                binding.bookmarkMovie.visibility = View.GONE
             }
         }
     }
