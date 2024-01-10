@@ -32,9 +32,11 @@ class ListCreditAdapter (
         val item = getItem(position)
 
         holder.apply {
-            Glide.with(context)
-                .load(moviePosterBasePath + item.profilePath)
-                .into(holder.profile)
+            if (item.profilePath != null) {
+                Glide.with(context)
+                    .load(moviePosterBasePath + item.profilePath)
+                    .into(holder.profile)
+            }
         }
 
         holder.name.text = item.name

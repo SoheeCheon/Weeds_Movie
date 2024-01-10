@@ -1,5 +1,6 @@
 package sohee.cheon.moviedb.domain
 
+import android.util.Log
 import kotlinx.coroutines.flow.single
 import sohee.cheon.moviedb.data.DetailMovie
 import javax.inject.Inject

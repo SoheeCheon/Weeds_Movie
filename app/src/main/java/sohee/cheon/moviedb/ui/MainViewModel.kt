@@ -47,6 +47,10 @@ class MainViewModel @Inject constructor(
     private val _movieDetail = MutableLiveData<DetailMovie>()
     val movieDetail : LiveData<DetailMovie> = _movieDetail
 
+    // 비슷한 영화를 클릭할시 이전 화면의 데이터 저장
+    private val _listMovie = MutableLiveData<List<DetailMovie>>()
+    val listMovie : LiveData<List<DetailMovie>> = _listMovie
+
     private val _token = MutableLiveData<String>()
     val token : LiveData<String> = _token
 
@@ -95,7 +99,26 @@ class MainViewModel @Inject constructor(
     fun getDetailMovie(id: Int) {
         CoroutineScope(ioDispatcher).launch {
             val result = getDetailMovieUseCase(_token.value ?: "", id)
+            Log.d("ViewModel getDetailMovie", "$result")
             _movieDetail.postValue(result)
+        }
+    }
+
+    fun putList() {
+        val list = _listMovie.value ?: arrayListOf()
+        _movieDetail.value?.let {
+            val updateList = list.plus(it)
+            _listMovie.value = updateList
+        }
+    }
+
+    fun popList() {
+        val list = _listMovie.value ?: arrayListOf()
+        if (list.isEmpty()) return
+        _movieDetail.value = _listMovie.value?.last()
+        _movieDetail.value?.let {
+            val updateList = list.minus(it)
+            _listMovie.value = updateList
         }
     }
 
@@ -107,6 +130,10 @@ class MainViewModel @Inject constructor(
                 _searchMovies.postValue(result)
             }
         }
+    }
+
+    fun clearDetail() {
+        _movieDetail.value = null
     }
 
     fun clearSearch() {

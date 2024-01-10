@@ -50,8 +50,6 @@ class ListSearchMovieAdapter (
                     .override(450, 700)
                     .into(this.moviePoster)
             }
-
-            Log.d("moviePoster url", "${moviePosterBasePath + item.posterPath}")
             this.movieTitle.text = item.title
         }
     }
