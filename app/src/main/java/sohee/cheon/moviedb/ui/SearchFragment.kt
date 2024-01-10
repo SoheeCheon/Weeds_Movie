@@ -33,8 +33,10 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(FragmentSearchBinding:
         }
 
         viewModel.searchMovies.observe(viewLifecycleOwner) {
-            adapter.submitList(it.results)
-            binding.searchMovieList.adapter = adapter
+            it?.let {
+                adapter.submitList(it.results)
+                binding.searchMovieList.adapter = adapter
+            }
         }
 
         binding.backArrow.setOnClickListener {

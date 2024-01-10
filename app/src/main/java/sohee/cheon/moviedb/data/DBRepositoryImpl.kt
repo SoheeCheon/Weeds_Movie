@@ -83,15 +83,19 @@ class DBRepositoryImpl @Inject constructor(
             null
         )
 
-        cursor.moveToFirst()
-        result = result.plus(cursor.getInt(1))
-
-        for ( i in 2..cursor.count) {
-            cursor.moveToNext()
+        if (cursor.count == 0) {
+            emit(arrayOf())
+        } else {
+            cursor.moveToFirst()
             result = result.plus(cursor.getInt(1))
-        }
 
-        emit(result)
+            for ( i in 2..cursor.count) {
+                cursor.moveToNext()
+                result = result.plus(cursor.getInt(1))
+            }
+
+            emit(result)
+        }
 
         db.close()
     }
