@@ -5,11 +5,13 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import sohee.cheon.moviedb.BuildConfig
+import sohee.cheon.moviedb.R
 import sohee.cheon.moviedb.data.response.MovieInfo
 import sohee.cheon.moviedb.databinding.ItemSearchMovieBinding
 
@@ -42,11 +44,15 @@ class ListSearchMovieAdapter (
         }
 
         holder.apply {
-            Glide.with(context)
-                .load(moviePosterBasePath + item.posterPath)
-                .override(LayoutParams.WRAP_CONTENT)
-                .into(holder.moviePoster)
-            holder.movieTitle.text = item.title
+            if (item.posterPath != null) {
+                Glide.with(context)
+                    .load(moviePosterBasePath + item.posterPath)
+                    .override(450, 700)
+                    .into(this.moviePoster)
+            }
+
+            Log.d("moviePoster url", "${moviePosterBasePath + item.posterPath}")
+            this.movieTitle.text = item.title
         }
     }
 

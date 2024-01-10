@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingHorizontal="5dp"
+    android:layout_marginBottom="8dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <ImageView
-        tools:layout_height="150dp"
-        android:src="@drawable/image_placeholder"
         android:id="@+id/movie_poster"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:background="@drawable/background_radius_8dp"
+        android:src="@drawable/image_placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_height="150dp" />
 
     <TextView
         android:id="@+id/movie_title"
@@ -24,8 +27,9 @@
         android:layout_height="wrap_content"
         tools:text="토르 : 와우"
         android:ellipsize="end"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textAlignment="center"
+        android:textColor="@color/white_90"
         app:layout_constraintTop_toBottomOf="@id/movie_poster"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
